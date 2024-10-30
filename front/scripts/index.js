@@ -1,11 +1,63 @@
-const displayMovies = require("./utils");
+const utils = require("./utils");
+const axios = require("axios");
+
+const url = "https://students-api.up.railway.app/movies";
 
 // Llamada a la API para obtener las películas
-$.get("https://students-api.up.railway.app/movies", (data, status) => {
-    if (status === "success") {
-        displayMovies(data); // Llamar a displayMovies con los datos obtenidos
-        console.log("concurrently es funcionando de mil maravillas!!!")
-    } else {
-        console.error("Error al obtener los datos de la API.");
-    };
-});
+// $.get("https://students-api.up.railway.app/movies", (data, status) => {
+//     if (status === "success") {
+//         displayMovies(data); // Llamar a displayMovies con los datos obtenidos
+//     } else {
+//         console.error("Error al obtener los datos de la API.");
+//     };
+// });
+
+
+//////////////////////////////////////////////////////
+
+
+// const request = $.get("https://students-api.up.railway.app/movies");
+
+// request.done((data, status) => {
+//     return utils.displayMovies(data);
+// });
+
+// request.fail(() => {
+//     utils.displayMoviesFail;
+// });
+
+/////////////////////////////////////////////////////
+
+// const a = axios.get("https://students-api.up.railway.app/movies")
+// .then((res)=>{
+//     console.log("axios res.data", res.data);
+//     return utils.displayMovies(res.data);
+// })
+// .catch((error)=> {
+//     console.log("Error en la petición", error);
+//     return utils.displayMoviesFail;
+// })
+// .finally(()=>{
+//     console.log("Logramos nuestra llamada con promesa")
+// })
+
+// console.log("new", a);
+
+//////////////////////////////////////////////////////////////////
+
+const getMovies = async () => {
+    try{
+        const res = await axios(url);
+        if(!res.data?.length) {
+            return utils.displayMoviesFail("No hay películas para mostrar.");
+        };
+        return utils.displayMovies(res.data);
+    } catch(e){
+        console.log("Error");
+        return utils.displayMoviesFail;
+    } finally{
+        console.log("OAA")
+    }
+};
+
+getMovies();

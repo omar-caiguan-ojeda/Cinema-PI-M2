@@ -25,4 +25,14 @@ function displayMovies(dataFromApi) {
     });
 };
 
-module.exports = displayMovies;
+const displayMoviesFail = ( msg = "No se pudieron cargar las películas. Inténtelo mas tarde." ) =>{
+    const carouselInner = document.getElementById("moviesList");
+    carouselInner .innerHTML = `<p>${msg}</p>`;
+    return;
+}
+
+const modulesExport = {
+    displayMovies,
+    displayMoviesFail
+}
+module.exports = modulesExport;
