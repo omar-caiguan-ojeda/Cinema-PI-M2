@@ -2,6 +2,24 @@ const utils = require("./utils");
 const axios = require("axios");
 
 const url = "https://students-api.up.railway.app/movies";
+const URL_API = "http://localhost:3000/";
+
+const getMovies = async () => {
+    try{
+        const res = await axios(URL_API + "movies");
+        if(!res.data?.length) {
+            return utils.displayMoviesFail("No hay películas para mostrar.");
+        };
+        return utils.displayMovies(res.data);
+    } catch(e){
+        console.log("Error");
+        return utils.displayMoviesFail;
+    } finally{
+        console.log("")
+    }
+};
+
+getMovies();
 
 // Llamada a la API para obtener las películas
 // $.get("https://students-api.up.railway.app/movies", (data, status) => {
@@ -45,19 +63,3 @@ const url = "https://students-api.up.railway.app/movies";
 
 //////////////////////////////////////////////////////////////////
 
-const getMovies = async () => {
-    try{
-        const res = await axios(url);
-        if(!res.data?.length) {
-            return utils.displayMoviesFail("No hay películas para mostrar.");
-        };
-        return utils.displayMovies(res.data);
-    } catch(e){
-        console.log("Error");
-        return utils.displayMoviesFail;
-    } finally{
-        console.log("OAA")
-    }
-};
-
-getMovies();
