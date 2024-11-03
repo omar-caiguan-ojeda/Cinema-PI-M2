@@ -9,13 +9,35 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./scripts/activity.js":
+/*!*****************************!*\
+  !*** ./scripts/activity.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   Activity: () => (/* binding */ Activity),\n/* harmony export */   Repository: () => (/* binding */ Repository)\n/* harmony export */ });\nclass Activity {\r\n    constructor(title, year, director, duration, genres, rate, poster) {\r\n        this.title = title;\r\n        this.year = year;\r\n        this.director = director;\r\n        this.duration = duration;\r\n        this.genres = genres;\r\n        this.rate = rate;\r\n        this.poster = poster;\r\n    }\r\n}\r\n\r\nclass Repository {\r\n    static getFormData() {\r\n        const title = $(\"#title\").val();\r\n        const year = parseInt($(\"#year\").val());\r\n        const director = $(\"#director\").val();\r\n        const duration = $(\"#duration\").val();\r\n        const genres = $(\"input[name='genre']:checked\").map(function() { return this.value; }).get();\r\n        const rate = parseFloat($(\"#rate\").val());\r\n        const poster = $(\"#poster\").val();\r\n\r\n        return new Activity(title, year, director, duration, genres, rate, poster);\r\n    }\r\n\r\n    static clearForm() {\r\n        $(\"#title\").val(\"\");\r\n        $(\"#year\").val(\"\");\r\n        $(\"#director\").val(\"\");\r\n        $(\"#duration\").val(\"\");\r\n        $(\"input[name='genre']\").prop(\"checked\", false);\r\n        $(\"#rate\").val(\"\");\r\n        $(\"#poster\").val(\"\");\r\n    }\r\n}\r\n\n\n//# sourceURL=webpack://front/./scripts/activity.js?");
+
+/***/ }),
+
+/***/ "./scripts/form.js":
+/*!*************************!*\
+  !*** ./scripts/form.js ***!
+  \*************************/
+/***/ (() => {
+
+eval("console.log(\"Iniciando formulario\");\r\n\r\n// Renderiza los géneros en una lista de checkboxes en el formulario\r\nconst renderForm = () => {\r\n    const genres = [\r\n        { name: \"Acción\", value: \"action\" },\r\n        { name: \"Aventura\", value: \"adventure\" },\r\n        { name: \"Misterio\", value: \"mystery\" }, \r\n        { name: \"Comedia\", value: \"comedy\" },\r\n        { name: \"Fantasía\", value: \"fantasy\" },\r\n        { name: \"Thriller\", value: \"thriller\" },\r\n        { name: \"Drama\", value: \"drama\" },\r\n        { name: \"Horror\", value: \"horror\" },\r\n        { name: \"Ciencia Ficción\", value: \"sci-fi\" } \r\n    ];\r\n\r\n    const checkList = document.getElementById(\"checkbox-list\");\r\n    genres.forEach((genre) => {\r\n        const element = document.createElement(\"label\");\r\n        element.innerHTML = `<input type=\"checkbox\" name=\"opciones\" value=\"${genre.value}\" class=\"w-auto\">${genre.name}`;\r\n        checkList.append(element);\r\n    });\r\n};\r\n\r\nrenderForm();  // Llama a la función para generar el formulario con los géneros\r\n\r\n// Maneja el envío del formulario\r\nconst handleOnSubmit = (e) => {\r\n    e.preventDefault();\r\n\r\n    const formData = new FormData(e.target);  \r\n\r\n    // Obtiene datos del formulario\r\n    const title = formData.get('title');\r\n    const year = formData.get('year');\r\n    const director = formData.get('director');\r\n    const duration_hours = formData.get('duration_hours');\r\n    const duration_minutes = formData.get('duration_minutes');\r\n    const rate = formData.get('rate');\r\n    const poster = formData.get('poster');\r\n    const genres = Array.from(e.target.querySelectorAll('input[name=\"opciones\"]:checked')).map(checkbox => checkbox.value);\r\n\r\n    const data = {\r\n        title,\r\n        year,\r\n        director,\r\n        duration: `${duration_hours}hs ${duration_minutes}ms`,\r\n        genres: genres,\r\n        rate,\r\n        poster\r\n    };\r\n\r\n    // Validación del formulario\r\n    if (!title || !year || !director || !duration_hours || !duration_minutes || !rate || !poster) {\r\n        alert(\"Todos los campos son obligatorios. Por favor completa todos los campos.\");\r\n        return;\r\n    }\r\n\r\n    if (year < 1895 || year > 2024) {\r\n        alert(\"El año de la película debe estar entre 1895 y 2024.\");\r\n        return;\r\n    }\r\n\r\n    if (duration_hours < 0 || duration_hours > 857) {\r\n        alert(\"La duración en horas debe estar entre 0 y 857.\");\r\n        return;\r\n    }\r\n\r\n    if (duration_minutes < 1 || duration_minutes > 59) {\r\n        alert(\"La duración en minutos debe estar entre 1 y 59.\");\r\n        return;\r\n    }\r\n\r\n    if (genres.length === 0) {\r\n        alert(\"Debes seleccionar al menos un género.\");\r\n        return;\r\n    }\r\n\r\n    if (rate < 1 || rate > 10) {\r\n        alert(\"La calificación debe estar entre 1 y 10.\");\r\n        return;\r\n    }\r\n\r\n    console.log(\"Datos del formulario:\", data);\r\n};\r\n\r\nconst form = document.getElementById(\"form_movies\");\r\nform.addEventListener(\"submit\", handleOnSubmit);\r\n\r\n// Función para restablecer el formulario\r\nconst resetForm = (event) => {\r\n    event.preventDefault();\r\n\r\n    // Confirmación de restablecimiento\r\n    const confirmation = confirm(\"¿Estás seguro que deseas resetear el formulario?\");\r\n    \r\n    if (confirmation) {\r\n        form.reset();\r\n        alert(\"El formulario ha sido reiniciado\");\r\n    }\r\n};\r\n\r\nconst resetButton = document.querySelector('button[type=\"reset\"]');\r\nresetButton.addEventListener(\"click\", resetForm);\r\n\n\n//# sourceURL=webpack://front/./scripts/form.js?");
+
+/***/ }),
+
 /***/ "./scripts/index.js":
 /*!**************************!*\
   !*** ./scripts/index.js ***!
   \**************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("const utils = __webpack_require__(/*! ./utils */ \"./scripts/utils.js\");\r\nconst axios = __webpack_require__(/*! axios */ \"./node_modules/axios/dist/browser/axios.cjs\");\r\n\r\nconst url = \"https://students-api.up.railway.app/movies\";\r\nconst URL_API = \"http://localhost:3000/\";\r\n\r\nconst getMovies = async () => {\r\n    try{\r\n        const res = await axios(URL_API + \"movies\");\r\n        if(!res.data?.length) {\r\n            return utils.displayMoviesFail(\"No hay películas para mostrar.\");\r\n        };\r\n        return utils.displayMovies(res.data);\r\n    } catch(e){\r\n        console.log(\"Error\");\r\n        return utils.displayMoviesFail;\r\n    } finally{\r\n        console.log(\"\")\r\n    }\r\n};\r\n\r\ngetMovies();\r\n\r\n// Llamada a la API para obtener las películas\r\n// $.get(\"https://students-api.up.railway.app/movies\", (data, status) => {\r\n//     if (status === \"success\") {\r\n//         displayMovies(data); // Llamar a displayMovies con los datos obtenidos\r\n//     } else {\r\n//         console.error(\"Error al obtener los datos de la API.\");\r\n//     };\r\n// });\r\n\r\n\r\n//////////////////////////////////////////////////////\r\n\r\n\r\n// const request = $.get(\"https://students-api.up.railway.app/movies\");\r\n\r\n// request.done((data, status) => {\r\n//     return utils.displayMovies(data);\r\n// });\r\n\r\n// request.fail(() => {\r\n//     utils.displayMoviesFail;\r\n// });\r\n\r\n/////////////////////////////////////////////////////\r\n\r\n// const a = axios.get(\"https://students-api.up.railway.app/movies\")\r\n// .then((res)=>{\r\n//     console.log(\"axios res.data\", res.data);\r\n//     return utils.displayMovies(res.data);\r\n// })\r\n// .catch((error)=> {\r\n//     console.log(\"Error en la petición\", error);\r\n//     return utils.displayMoviesFail;\r\n// })\r\n// .finally(()=>{\r\n//     console.log(\"Logramos nuestra llamada con promesa\")\r\n// })\r\n\r\n// console.log(\"new\", a);\r\n\r\n//////////////////////////////////////////////////////////////////\r\n\r\n\n\n//# sourceURL=webpack://front/./scripts/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _activity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./activity.js */ \"./scripts/activity.js\");\n__webpack_require__ (/*! ./form.js */ \"./scripts/form.js\");\r\n\r\nconst utils = __webpack_require__(/*! ./utils */ \"./scripts/utils.js\");\r\nconst axios = __webpack_require__(/*! axios */ \"./node_modules/axios/dist/browser/axios.cjs\");\r\n\r\nconst url = \"https://students-api.up.railway.app/movies\";\r\nconst URL_API = \"http://localhost:3000/\";\r\n\r\nconst getMovies = async () => {\r\n    try{\r\n        const res = await axios(URL_API + \"movies\");\r\n        if(!res.data?.length) {\r\n            return utils.displayMoviesFail(\"No hay películas para mostrar.\");\r\n        };\r\n        return utils.displayMovies(res.data);\r\n    } catch(e){\r\n        console.log(\"Error\");\r\n        return utils.displayMoviesFail;\r\n    } finally{\r\n        console.log(\"\")\r\n    }\r\n};\r\n\r\ngetMovies();\r\n\r\n// Llamada a la API para obtener las películas\r\n// $.get(\"https://students-api.up.railway.app/movies\", (data, status) => {\r\n//     if (status === \"success\") {\r\n//         displayMovies(data); // Llamar a displayMovies con los datos obtenidos\r\n//     } else {\r\n//         console.error(\"Error al obtener los datos de la API.\");\r\n//     };\r\n// });\r\n\r\n\r\n//////////////////////////////////////////////////////\r\n\r\n\r\n// const request = $.get(\"https://students-api.up.railway.app/movies\");\r\n\r\n// request.done((data, status) => {\r\n//     return utils.displayMovies(data);\r\n// });\r\n\r\n// request.fail(() => {\r\n//     utils.displayMoviesFail;\r\n// });\r\n\r\n/////////////////////////////////////////////////////\r\n\r\n// const a = axios.get(\"https://students-api.up.railway.app/movies\")\r\n// .then((res)=>{\r\n//     console.log(\"axios res.data\", res.data);\r\n//     return utils.displayMovies(res.data);\r\n// })\r\n// .catch((error)=> {\r\n//     console.log(\"Error en la petición\", error);\r\n//     return utils.displayMoviesFail;\r\n// })\r\n// .finally(()=>{\r\n//     console.log(\"Logramos nuestra llamada con promesa\")\r\n// })\r\n\r\n// console.log(\"new\", a);\r\n\r\n//////////////////////////////////////////////////////////////////\r\n\r\n\r\n\r\n\r\n\r\n// const URL_API = \"https://example.com/api/\";  // Reemplazar con la URL de la API\r\n\r\nasync function addMoviePost(activity) {\r\n    try {\r\n        const response = await fetch(URL_API + \"posts\", {\r\n            method: \"POST\",\r\n            headers: {\r\n                \"Content-Type\": \"application/json\",\r\n            },\r\n            body: JSON.stringify(activity),\r\n        });\r\n        \r\n        if (response.ok) {\r\n            console.log(\"Película agregada exitosamente:\", activity);\r\n        } else {\r\n            console.error(\"Error al agregar la película:\", response.statusText);\r\n        }\r\n    } catch (error) {\r\n        console.error(\"Error en la solicitud:\", error);\r\n    }\r\n}\r\n\r\n$(document).ready(function() {\r\n    $(\"#movieForm\").submit(function(event) {\r\n        event.preventDefault();\r\n        \r\n        const newActivity = _activity_js__WEBPACK_IMPORTED_MODULE_0__.Repository.getFormData();\r\n        addMoviePost(newActivity);\r\n        _activity_js__WEBPACK_IMPORTED_MODULE_0__.Repository.clearForm();\r\n    });\r\n});\r\n\n\n//# sourceURL=webpack://front/./scripts/index.js?");
 
 /***/ }),
 
@@ -67,6 +89,18 @@ eval("// Axios v1.7.7 Copyright (c) 2024 Matt Zabriskie and contributors\n\n\nfu
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -77,6 +111,22 @@ eval("// Axios v1.7.7 Copyright (c) 2024 Matt Zabriskie and contributors\n\n\nfu
 /******/ 				if (typeof window === 'object') return window;
 /******/ 			}
 /******/ 		})();
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
 /******/ 	})();
 /******/ 	
 /************************************************************************/

@@ -1,3 +1,5 @@
+require ("./form.js");
+
 const utils = require("./utils");
 const axios = require("axios");
 
@@ -63,3 +65,38 @@ getMovies();
 
 //////////////////////////////////////////////////////////////////
 
+
+
+import { Activity, Repository } from './activity.js';
+
+// const URL_API = "https://example.com/api/";  // Reemplazar con la URL de la API
+
+async function addMoviePost(activity) {
+    try {
+        const response = await fetch(URL_API + "posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(activity),
+        });
+        
+        if (response.ok) {
+            console.log("Película agregada exitosamente:", activity);
+        } else {
+            console.error("Error al agregar la película:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error en la solicitud:", error);
+    }
+}
+
+$(document).ready(function() {
+    $("#movieForm").submit(function(event) {
+        event.preventDefault();
+        
+        const newActivity = Repository.getFormData();
+        addMoviePost(newActivity);
+        Repository.clearForm();
+    });
+});
