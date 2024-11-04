@@ -1,0 +1,29 @@
+/* Estilo para las imágenes */
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+.image-container img {
+    width: 45%;
+    border-radius: 10px;
+}
+/* Descripciones de las imágenes */
+.image-description {
+    font-size: 0.9em;
+    margin-top: 5px;
+    color: #ddd;
+    text-align: center;
+}
+/* Estilos de texto */
+p {
+    text-align: justify;
+}
+/* Para la última imagen centrada */
+.image-container-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
