@@ -1,5 +1,3 @@
-//"http://localhost:3000"
-
 const express = require("express");
 const router = require("./routes");
 const morgan = require("morgan");

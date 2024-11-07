@@ -1,36 +1,35 @@
 const movieService = require("../services/movieService")
 
 module.exports = {
-    getMovies : async(req, res) => {         // También deberá ser una funcion Async
+    getMovies : async(req, res) => {         
         try {
             const movies = await movieService.getAllMovies();
             res.status(200).json(movies);
-        } catch (error) { //(error)
+        } catch (error) { 
             res.status(500).json({
                 message: "Ha ocurrido un error: " + error  
-                // Nunca debemos dejar ese futuro error a la zar. error => message
-            }); // Siempre debemos incluír un posible fallo. ademas sacar "+ e.message"
+                
+            }); 
         } 
     },
     
-    
-    
-    // // en el futuro esto es lo que hablará con la base de datos, donde guardamos las peliculas
-    // getMovies: async(req, res)=> {
-    //     res.status(200);
-    //     res.send("Proximamente tendremos cargardas las películas");
-    //     //res.status(201)
-    //     /*
-    //     try{
-    //     intentar recibir datos
-    //     } catch () {
-    //     arreglar si no lo recibimos 
-    //     }
-        
-    //     */
-    // }
+  
+
+    addMovie: async (req, res) => {
+        const { title, year, director, duration, rate, poster, genres } = req.body;
+        try {
+        const newMovie = await movieService.createMovie({
+            title,
+            year,
+            director,
+            duration,
+            rate,
+            poster,
+            genres,
+        });
+        res.status(201).json({ message: "Película creada exitosamente", data: newMovie });
+        } catch (error) {
+        res.status(500).json({ message: "Error al crear la película" });
+        }
+    },
 };
-
-
-
-

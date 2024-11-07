@@ -1,19 +1,23 @@
 /* Configuración general */
+
 body {
     background-color: #000;
     color: #fff;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    align-items: center; 
+    min-height: 100vh;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 /* Encabezado principal */
-.main-header {
+.cinema-header {
     width: 100%;
     height: 50px;
-    /* 'https://imgix.hoyts.com.au/cinemas/melbourne-central.jpg?fit=crop&auto=compress%2cformat&crop=faces%2centropy&w=1106&h=400' */
-    background-image: url('../assets/images/image-header.jpg'); /* Agrega la URL de la imagen */
+    background-image: url('../assets/images/image-header.jpg');
     background-size: cover;
     background-position: center;
     text-align: center;
@@ -21,28 +25,33 @@ body {
     margin-bottom: 20px;
 }
 
+.cinema-title {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    transition: opacity 1s;
+}
+
 /* Barra de navegación */
-.navbar {
+.cinema-navbar {
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente */
-    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 10px;
     text-align: center;
-    position: fixed; /* Para que esté en la parte superior */
-    top: 0;
+    position: fixed;
+    top: 0px;
     z-index: 10;
     border-bottom: 1px solid #888;
     display: flex;
     justify-content: center;
-    gap: 20px; /* Espacio entre los enlaces */
+    gap: 20px;
 }
 
-.navbar ul {
+.cinema-navbar ul {
     list-style: none;
     display: flex;
     gap: 60px;
 }
 
-.navbar a {
+.cinema-navbar a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
@@ -50,7 +59,7 @@ body {
     transition: color 0.3s;
 }
 
-.navbar a:hover {
+.cinema-navbar a:hover {
     color: lightcoral;
 }
 
@@ -60,7 +69,7 @@ body {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 80px 20px; /* Espacio superior para la barra de navegación fija */
+    padding: 80px 20px;
 }
 
 /* Contenedor de las tarjetas */
@@ -80,6 +89,7 @@ body {
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s;
+    margin: 10px;
 }
 
 .movie-card img {
@@ -92,11 +102,11 @@ body {
 
 /* Efecto de hover en la tarjeta */
 .movie-card:hover {
-    transform: scale(1.05); /* La tarjeta "sobresale" */
+    transform: scale(1.05);
 }
 
 .movie-card:hover img {
-    transform: scale(1.1); /* Zoom sobre la imagen */
+    transform: scale(1.1);
 }
 
 /* Descripción de la tarjeta */
@@ -106,18 +116,18 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+    background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 15px;
-    opacity: 0; /* Invisible al inicio */
+    opacity: 0;
     transition: opacity 0.3s;
 }
 
 .movie-card:hover .movie-description {
-    opacity: 1; /* Se muestra cuando está en hover */
+    opacity: 1;
 }
 
 .movie-description h3 {
@@ -140,17 +150,15 @@ body {
 
 .star {
     font-size: 1.2em;
-    color: #ffcc00; /* Color de las estrellas activas */
-    opacity: 0.3; /* Transparencia para las no activas */
+    color: #ffcc00; 
+    opacity: 0.3; 
 }
 
 .star.active {
-    opacity: 1; /* Estrellas activas más visibles */
+    opacity: 1; 
 }
 
-.footer {
-    text-align: center;
-}
+
 /* HISTORIA DEL CINE */
 
 /* Estilos del contenedor principal */
@@ -166,17 +174,15 @@ body {
 }
 
 
-/* FORMULARIO */
-
-
+/* AGREGAR PELICULAS */
 
 /* Contenedor del formulario */
 form {
-    background-color: #333; /* Color gris oscuro */
-    color: #fff; /* Color del texto en blanco */
+    background-color: #333; 
+    color: #fff; 
     padding: 20px;
     border-radius: 8px;
-    width: 300px;
+    width: 600px;
     text-align: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     
@@ -199,13 +205,13 @@ form input[type="url"] {
     margin-bottom: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #444; /* Color gris oscuro para los inputs */
+    background-color: #444;
     color: #fff;
 }
 
 /* Botón de envío */
 form button {
-    background-color: #555; /* Color gris intermedio */
+    background-color: #555;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -215,7 +221,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #666; /* Color más claro al pasar el cursor */
+    background-color: #666;
 }
 
 /* Alineación de las casillas de verificación en filas */
@@ -224,3 +230,56 @@ form label input[type="checkbox"] {
     margin-right: 8px;
 }
 
+
+/*WEB RECOMENDADAS*/
+
+.websites-container-d {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px;
+}
+
+.website-image-link {
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.website-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px; 
+    border: 2px solid #ccc; 
+    display: block;
+    transition: transform 0.3s;
+    max-width: none;
+    max-height: none;
+}
+
+.website-image:hover {
+    transform: scale(1.1);
+}
+
+.website-content {
+    color: #fff;
+}
+
+.website-title-link h2 {
+    color: #fff; 
+    margin: 0;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+
+.website-title-link h2:hover {
+    color: #ccc; 
+}
+
+.website-content p {
+    color: #fff; 
+    text-align: justify; 
+    margin-top: 5px;
+}

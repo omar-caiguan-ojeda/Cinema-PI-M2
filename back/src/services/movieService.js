@@ -1,6 +1,7 @@
 const axios = require('axios');
+const Movie = require("../models/Movie");
 
-class Movie {
+class MovieClass {
   constructor ({title, year, director, duration, genre, rate, poster}) {
     if(!title || !director || !poster) {
       throw new Error("Las propiedades 'title', 'director' y 'poster' son obligatorias.")
@@ -15,74 +16,26 @@ class Movie {
     this.poster = poster;
   }
 }
-//const { getMovies } = require("../controllers/moviesControllers");
-
-// const movies = [
-//     {
-//       "title": "Guardians of the Galaxy Vol. 2",
-//       "year": 2017,
-//       "director": "James Gunn",
-//       "duration": "2h 16min",
-//       "genre": [
-//         "Action",
-//         "Adventure",
-//         "Comedy"
-//       ],
-//       "rate": 7.7,
-//       "poster": "https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg"
-//     },
-//     {
-//       "title": "Star Wars: Episode IV - A New Hope",
-//       "year": 1977,
-//       "director": "George Lucas",
-//       "duration": "2h 1min",
-//       "genre": [
-//         "Action",
-//         "Adventure",
-//         "Fantasy",
-//         "Sci-Fi"
-//       ],
-//       "rate": 8.7,
-//       "poster": "https://m.media-amazon.com/images/M/MV5BOTA5NjhiOTAtZWM0ZC00MWNhLThiMzEtZDFkOTk2OTU1ZDJkXkEyXkFqcGdeQXVyMTA4NDI1NTQx._V1_SX300.jpg"
-//     },
-//     {
-//       "title": "The Lord of the Rings: The Fellowship of the Ring",
-//       "year": 2001,
-//       "director": "Peter Jackson",
-//       "duration": "2h 58min",
-//       "genre": [
-//         "Action",
-//         "Adventure",
-//         "Drama",
-//         "Fantasy"
-//       ],
-//       "rate": 8.8,
-//       "poster": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg"
-//     }
-// ];
-
-// module.exports = {
-//     getAllMovies: async() => {
-//         return movies;
-//     }
-    
-// }
-
-////////////////////////////////////////////
-// https://students-api.up.railway.app/movies
 
 module.exports = {
   getAllMovies: async () => {
-    try{
-      const res = await axios("https://students-api.up.railway.app/movies");
-
-      const movies = res.data.map(movie => new Movie(movie));
-      return movies;
-    }
-    catch(error) {
-      console.log("error", error);
+    try {
+      const moviesList = await Movie.find({});
+      return moviesList;
+    } catch (error) {
+      console.log("Error fetching movies:", error);
       throw error;
     }
+  },
 
+  createMovie: async (movieData) => {
+    try {
+      const newMovie = await Movie.create(movieData);
+      return newMovie;
+    } catch (error) {
+      console.log("Error creating movie:", error);
+      throw error;
+    }
   },
 };
+
